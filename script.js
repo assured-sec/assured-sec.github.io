@@ -39,7 +39,7 @@ document.getElementById('preInstallForm').addEventListener('submit', async funct
 
   try {
     // First POST text fields as JSON
-    const textResponse = await fetch('https://script.google.com/macros/s/AKfycbwfmiSEY6zqrv7IudL1k0jkd91ethbR21BEY82nnyd6fE0zrh9mchmGOJ-T129Oodwi/exec', {
+    const textResponse = await fetch('https://script.google.com/macros/s/AKfycbynZdPqN8zdXof0tzR3IpMgcSxsYP1CNeVtxefsw1pl0g2hlQT1tXUqhiS3z0CI59bC/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: 'text', ...formDataObj })
@@ -66,7 +66,7 @@ document.getElementById('preInstallForm').addEventListener('submit', async funct
 
     if (hasFiles) {
       console.log('Uploading files...');
-      const fileResponse = await fetch('https://script.google.com/macros/s/AKfycbwfmiSEY6zqrv7IudL1k0jkd91ethbR21BEY82nnyd6fE0zrh9mchmGOJ-T129Oodwi/exec', {
+      const fileResponse = await fetch('https://script.google.com/macros/s/AKfycbynZdPqN8zdXof0tzR3IpMgcSxsYP1CNeVtxefsw1pl0g2hlQT1tXUqhiS3z0CI59bC/exec', {
         method: 'POST',
         body: fileFormData
       });
