@@ -31,6 +31,9 @@ document.getElementById('preInstallForm').addEventListener('submit', function(ev
   // Add spinner inside submit button
   submitButton.classList.add('loading');
 
+  console.log('Project Number being sent:', document.getElementById('projectNumber').value);
+
+
   const formData = new FormData(form);
 
   fetch('https://script.google.com/macros/s/AKfycbwfmiSEY6zqrv7IudL1k0jkd91ethbR21BEY82nnyd6fE0zrh9mchmGOJ-T129Oodwi/exec', {
