@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pre-Install Survey</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="form-container">
+    <h1>Pre-Install Survey</h1>
+    <form id="preInstallForm" enctype="multipart/form-data">
+      <input type="hidden" id="projectCode" name="projectCode" value="">
+
+      <div id="contactContainer">
+        <h3>Main Point of Contact</h3>
+        <div class="entry-group">
+          <label for="contactName1">Name</label>
+          <input type="text" id="contactName1" name="contactName1" required>
+          <label for="contactPhone1">Phone</label>
+          <input type="tel" id="contactPhone1" name="contactPhone1" required>
+          <label for="contactEmail1">Email</label>
+          <input type="email" id="contactEmail1" name="contactEmail1" required>
+        </div>
+      </div>
+      <button type="button" class="add-btn" onclick="addContact('contactContainer', 'contact')">Add Another Contact</button>
+
+      <div id="adminContainer">
+        <h3>System Administrator</h3>
+        <div class="entry-group">
+          <label for="adminName1">Name</label>
+          <input type="text" id="adminName1" name="adminName1" required>
+          <label for="adminPhone1">Phone</label>
+          <input type="tel" id="adminPhone1" name="adminPhone1" required>
+          <label for="adminEmail1">Email</label>
+          <input type="email" id="adminEmail1" name="adminEmail1" required>
+        </div>
+      </div>
+      <button type="button" class="add-btn" onclick="addContact('adminContainer', 'admin')">Add Another Administrator</button>
+
+      <label for="userDatabase">User Database Size</label>
+      <input type="number" id="userDatabase" name="userDatabase" placeholder="Number of users, fobs, codes" data-optional>
+
+      <label for="floorPlan">Upload PDF Floor Plan</label>
+      <input type="file" id="floorPlanUpload" name="floorPlanUpload" accept=".pdf">
+
+      <label for="databaseUpload">Upload Existing Database</label>
+      <input type="file" id="databaseUpload" name="databaseUpload" accept=".csv,.xlsx,.xls,.pdf">
+
+      <label for="vendorAccess">Vendor Access</label>
+      <textarea id="vendorAccess" name="vendorAccess" placeholder="Describe vendor access" data-optional></textarea>
+
+      <label for="vendorParking">Vendor Parking</label>
+      <textarea id="vendorParking" name="vendorParking" placeholder="Describe vendor parking" data-optional></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
