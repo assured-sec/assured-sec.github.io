@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const projectNumber = urlParams.get('project');
@@ -6,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Project number set from URL:', projectNumber);
   }
 });
-
 
 function addContact(containerId, type) {
   const container = document.getElementById(containerId);
@@ -24,48 +24,72 @@ function addContact(containerId, type) {
   container.appendChild(entry);
 }
 
-document.getElementById('preInstallForm').addEventListener('submit', function(event) {
+document.getElementById('preInstallForm').addEventListener('submit', async function(event) {
   event.preventDefault();
 
   const form = this;
   const submitButton = form.querySelector('button[type="submit"]');
   const thankYouScreen = document.getElementById('thankYouScreen');
 
-  // Add spinner inside submit button
   submitButton.classList.add('loading');
 
-  console.log('Project Number being sent:', document.getElementById('projectNumber').value);
+  // Prepare text data
+  const formDataObj = Object.fromEntries(new FormData(form));
+  console.log('Text data being sent:', formDataObj);
 
-  const data = Object.fromEntries(new FormData(form));
-  data.projectNumber = document.getElementById('projectNumber').value;
+  try {
+    // First POST text fields as JSON
+    const textResponse = await fetch('https://script.google.com/macros/s/AKfycbwfmiSEY6zqrv7IudL1k0jkd91ethbR21BEY82nnyd6fE0zrh9mchmGOJ-T129Oodwi/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'text', ...formDataObj })
+    });
+    const textResult = await textResponse.json();
+    if (textResult.result !== 'success') throw new Error('Text submission failed');
 
-  fetch('https://script.google.com/macros/s/AKfycbwfmiSEY6zqrv7IudL1k0jkd91ethbR21BEY82nnyd6fE0zrh9mchmGOJ-T129Oodwi/exec', {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.result === 'success') {
-      form.style.transition = 'opacity 0.5s ease';
-      form.style.opacity = '0';
-      // Show thank you screen after fade
-      setTimeout(() => {
-        form.style.display = 'none';
-        thankYouScreen.classList.add('active');
-      }, 500);
+    console.log('Text fields submitted successfully');
+
+    // Prepare file upload (if any files)
+    const fileInputs = form.querySelectorAll('input[type="file"]');
+    let hasFiles = false;
+    const fileFormData = new FormData();
+    fileFormData.append('projectNumber', formDataObj.projectNumber);
+
+    fileInputs.forEach(input => {
+      if (input.files.length > 0) {
+        hasFiles = true;
+        for (let file of input.files) {
+          fileFormData.append(input.name, file);
+        }
+      }
+    });
+
+    if (hasFiles) {
+      console.log('Uploading files...');
+      const fileResponse = await fetch('https://script.google.com/macros/s/AKfycbwfmiSEY6zqrv7IudL1k0jkd91ethbR21BEY82nnyd6fE0zrh9mchmGOJ-T129Oodwi/exec', {
+        method: 'POST',
+        body: fileFormData
+      });
+      const fileResult = await fileResponse.json();
+      if (fileResult.result !== 'success') throw new Error('File upload failed');
+
+      console.log('Files uploaded successfully');
     } else {
-      alert('Form submission failed. Please try again.');
+      console.log('No files to upload.');
     }
-  })
-  .catch(error => {
+
+    // Fade out form and show thank you screen
+    form.style.transition = 'opacity 0.5s ease';
+    form.style.opacity = '0';
+    setTimeout(() => {
+      form.style.display = 'none';
+      thankYouScreen.classList.add('active');
+    }, 500);
+
+  } catch (error) {
     console.error('Error!', error.message);
-    alert('An error occurred while submitting the form.');
-  })
-  .finally(() => {
-    // Remove spinner from submit button
+    alert('An error occurred: ' + error.message);
+  } finally {
     submitButton.classList.remove('loading');
-  });
+  }
 });
