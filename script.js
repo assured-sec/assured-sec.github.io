@@ -24,19 +24,14 @@ function addContact(containerId, type) {
 document.getElementById('preInstallForm').addEventListener('submit', function(event) {
   event.preventDefault();
 
-  // Disable submit button and show feedback
-  const submitButton = this.querySelector('button[type="submit"]');
-  submitButton.disabled = true;
-  submitButton.textContent = 'Submitting...';
+  const form = this;
+  const submitButton = form.querySelector('button[type="submit"]');
+  const thankYouScreen = document.getElementById('thankYouScreen');
 
-  // Optional: add a visible status message
-  let statusMessage = document.createElement('p');
-  statusMessage.textContent = 'Submitting your form, please wait...';
-  statusMessage.style.color = '#333';
-  statusMessage.style.fontWeight = 'bold';
-  this.appendChild(statusMessage);
+  // Add spinner inside submit button
+  submitButton.classList.add('loading');
 
-  const formData = new FormData(this);
+  const formData = new FormData(form);
 
   fetch('https://script.google.com/macros/s/AKfycbwfmiSEY6zqrv7IudL1k0jkd91ethbR21BEY82nnyd6fE0zrh9mchmGOJ-T129Oodwi/exec', {
     method: 'POST',
@@ -45,22 +40,26 @@ document.getElementById('preInstallForm').addEventListener('submit', function(ev
   .then(response => response.json())
   .then(data => {
     if (data.result === 'success') {
-      statusMessage.textContent = 'Form submitted successfully!';
-      statusMessage.style.color = 'green';
+      // Fade out form
+      form.style.display = 'none';
+      thankYouScreen.classList.add('active');
+
+
+      // Show thank you screen after fade
+      setTimeout(() => {
+        form.style.display = 'none';
+        thankYouScreen.classList.add('active');
+      }, 500);
     } else {
-      statusMessage.textContent = 'Form submission failed. Please try again.';
-      statusMessage.style.color = 'red';
+      alert('Form submission failed. Please try again.');
     }
   })
   .catch(error => {
     console.error('Error!', error.message);
-    statusMessage.textContent = 'An error occurred while submitting the form.';
-    statusMessage.style.color = 'red';
+    alert('An error occurred while submitting the form.');
   })
   .finally(() => {
-    // Re-enable the submit button
-    submitButton.disabled = false;
-    submitButton.textContent = 'Submit';
+    // Remove spinner from submit button
+    submitButton.classList.remove('loading');
   });
 });
-
