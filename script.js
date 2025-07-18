@@ -16,28 +16,28 @@ document.getElementById('preInstallForm').addEventListener('submit', async funct
 
   submitButton.classList.add('loading');
 
-  const formDataObj = Object.fromEntries(new FormData(form));
-  console.log('Submitting text data:', formDataObj);
+  const formData = new FormData(form);
+
+  // Convert FormData to URL-encoded string
+  const urlEncodedData = new URLSearchParams(formData).toString();
 
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbwBPjbolESLzpXFwRAj232XrEh4sbt5216ih3jCP_MIQ5EWNuHPXSX_9I_ibHaGa3K_/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbzsMai18oub2DjUfBkLbynI1_qe8m643XGVbyznNsXRK72PDNpDyRjjESxOLJIjTNX_/exec', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formDataObj)
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: urlEncodedData
     });
 
     const result = await response.json();
     if (result.result === 'success') {
-      console.log('Text fields submitted successfully');
+      console.log('Form submitted successfully');
 
-      // Fade out form and show thank you screen
       form.style.transition = 'opacity 0.5s ease';
       form.style.opacity = '0';
       setTimeout(() => {
         form.style.display = 'none';
         thankYouScreen.classList.add('active');
       }, 500);
-
     } else {
       throw new Error('Form submission failed');
     }
