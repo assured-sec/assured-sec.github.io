@@ -1,3 +1,10 @@
+// Get the project number from URL and set it in the hidden field
+const urlParams = new URLSearchParams(window.location.search);
+const projectNumber = urlParams.get('project');
+if (projectNumber) {
+  document.getElementById('projectNumber').value = projectNumber;
+}
+
 function addContact(containerId, type) {
   const container = document.getElementById(containerId);
   const count = container.querySelectorAll('.entry-group').length + 1;
@@ -16,7 +23,21 @@ function addContact(containerId, type) {
 
 document.getElementById('preInstallForm').addEventListener('submit', function(event) {
   event.preventDefault();
+
+  // Disable submit button and show feedback
+  const submitButton = this.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitButton.textContent = 'Submitting...';
+
+  // Optional: add a visible status message
+  let statusMessage = document.createElement('p');
+  statusMessage.textContent = 'Submitting your form, please wait...';
+  statusMessage.style.color = '#333';
+  statusMessage.style.fontWeight = 'bold';
+  this.appendChild(statusMessage);
+
   const formData = new FormData(this);
+
   fetch('https://script.google.com/macros/s/AKfycbwfmiSEY6zqrv7IudL1k0jkd91ethbR21BEY82nnyd6fE0zrh9mchmGOJ-T129Oodwi/exec', {
     method: 'POST',
     body: formData
@@ -24,13 +45,22 @@ document.getElementById('preInstallForm').addEventListener('submit', function(ev
   .then(response => response.json())
   .then(data => {
     if (data.result === 'success') {
-      alert('Form submitted successfully!');
+      statusMessage.textContent = 'Form submitted successfully!';
+      statusMessage.style.color = 'green';
     } else {
-      alert('Form submission failed.');
+      statusMessage.textContent = 'Form submission failed. Please try again.';
+      statusMessage.style.color = 'red';
     }
   })
   .catch(error => {
     console.error('Error!', error.message);
-    alert('An error occurred while submitting the form.');
+    statusMessage.textContent = 'An error occurred while submitting the form.';
+    statusMessage.style.color = 'red';
+  })
+  .finally(() => {
+    // Re-enable the submit button
+    submitButton.disabled = false;
+    submitButton.textContent = 'Submit';
   });
 });
+
