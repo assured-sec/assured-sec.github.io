@@ -36,13 +36,15 @@ document.getElementById('preInstallForm').addEventListener('submit', function(ev
 
   console.log('Project Number being sent:', document.getElementById('projectNumber').value);
 
-
-  const formData = new FormData(form);
-  formData.append('projectNumber', document.getElementById('projectNumber').value);
+  const data = Object.fromEntries(new FormData(form));
+  data.projectNumber = document.getElementById('projectNumber').value;
 
   fetch('https://script.google.com/macros/s/AKfycbwfmiSEY6zqrv7IudL1k0jkd91ethbR21BEY82nnyd6fE0zrh9mchmGOJ-T129Oodwi/exec', {
     method: 'POST',
-    body: formData
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   })
   .then(response => response.json())
   .then(data => {
