@@ -1,9 +1,12 @@
-// Get the project number from URL and set it in the hidden field
-const urlParams = new URLSearchParams(window.location.search);
-const projectNumber = urlParams.get('project');
-if (projectNumber) {
-  document.getElementById('projectNumber').value = projectNumber;
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const projectNumber = urlParams.get('project');
+  if (projectNumber) {
+    document.getElementById('projectNumber').value = projectNumber;
+    console.log('Project number set from URL:', projectNumber);
+  }
+});
+
 
 function addContact(containerId, type) {
   const container = document.getElementById(containerId);
@@ -43,11 +46,8 @@ document.getElementById('preInstallForm').addEventListener('submit', function(ev
   .then(response => response.json())
   .then(data => {
     if (data.result === 'success') {
-      // Fade out form
-      form.style.display = 'none';
-      thankYouScreen.classList.add('active');
-
-
+      form.style.transition = 'opacity 0.5s ease';
+      form.style.opacity = '0';
       // Show thank you screen after fade
       setTimeout(() => {
         form.style.display = 'none';
