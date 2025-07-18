@@ -38,6 +38,7 @@ document.getElementById('preInstallForm').addEventListener('submit', function(ev
 
 
   const formData = new FormData(form);
+  formData.append('projectNumber', document.getElementById('projectNumber').value);
 
   fetch('https://script.google.com/macros/s/AKfycbwfmiSEY6zqrv7IudL1k0jkd91ethbR21BEY82nnyd6fE0zrh9mchmGOJ-T129Oodwi/exec', {
     method: 'POST',
