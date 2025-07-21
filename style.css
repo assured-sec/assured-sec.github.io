@@ -33,26 +33,30 @@ h1 {
 }
 
 h3 {
-  margin: 20px 0 10px;
+  margin: 5px 0px;
   color: #444;
 }
 
 p {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .entry-group {
   background: #fafafa;
   border: 1px solid #ddd;
   border-radius: 6px;
-  padding: 15px;
-  margin-bottom: 20px;
+  padding: 5px 15px;
+  margin-bottom: 15px;
 }
 
 label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   font-weight: bold; /* Default bold for normal labels */
+}
+
+em {
+  font-weight: bold;
 }
 
 .entry-group label input[type="radio"] {
@@ -62,10 +66,17 @@ label {
   vertical-align: middle;
 }
 
+.entry-group p {
+  margin-bottom: 5px;
+}
+
+.entry-group label{
+  
+}
+
 .entry-group label span {
   font-weight: normal;
 }
-
 
 input[type="text"],
 input[type="tel"],
@@ -92,7 +103,8 @@ textarea {
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  margin-left: 10px;
 }
 
 .add-btn:hover {

@@ -9,13 +9,13 @@
 <body>
   <div class="form-container">
     <h1>Pre-Install Survey</h1>
-    To ensure some stuff, fill out this thang!
+    <p>Please take a few minutes to answer the following questions to help us prepare for your project and ensure a smooth installation process.</p>
     <form id="preInstallForm" enctype="multipart/form-data">
       <input type="hidden" id="projectNumber" name="projectNumber" value="">
 
       <div id="contactContainer">
-        <h3>Primary Project Contact</h3>
         <div class="entry-group">
+          <h3>Primary Project Contact</h3>
           <label for="contactName1">Name</label>
           <input type="text" id="contactName1" name="contactName1" required>
           <label for="contactPhone1">Phone</label>
@@ -27,8 +27,8 @@
       <button type="button" class="add-btn" onclick="addContact('contactContainer', 'contact')">Add Another Contact</button>
 
       <div id="adminContainer">
-        <h3>System Administrator</h3>
         <div class="entry-group">
+          <h3>System Administrator</h3>
           <label for="adminName1">Name</label>
           <input type="text" id="adminName1" name="adminName1" required>
           <label for="adminPhone1">Phone</label>
@@ -40,20 +40,17 @@
       <button type="button" class="add-btn" onclick="addContact('adminContainer', 'admin')">Add Another Administrator</button>
 
       <div id="internetContainer"> 
-        <h3>Internet</h3>
         <div class="entry-group">
+          <h3>Internet</h3>
           <p>Is there internet onsite?</p>
-
           <label>
             <input type="radio" name="internet" value="No Internet" required>
             <span>No Internet</span>
           </label>
-
           <label>
             <input type="radio" name="internet" value="Hard-wired internet from switch/modem" required>
-            <span>Hard-wired internet from switch/modem</span>
+            <span>Hard-wired internet from switch/modem <em>(preferred)</em></span>
           </label>
-
           <label>
             <input type="radio" name="internet" value="Wi-Fi" required>
             <span>Wi-Fi</span>
@@ -61,23 +58,22 @@
         </div>
       </div>
 
+      <label for="floorPlan">Upload PDF Floor Plan</label>
+      <input type="file" id="floorPlanUpload" name="floorPlanUpload" accept=".pdf,image/*">
 
-    <label for="floorPlan">Upload PDF Floor Plan</label>
-    <input type="file" id="floorPlanUpload" name="floorPlanUpload" accept=".pdf,image/*">
+      <label for="userDatabase">User Database Size (Brivo Projects)</label>
+      <input type="number" id="userDatabase" name="userDatabase" placeholder="Number of users, fobs, codes" data-optional>
 
-    <label for="userDatabase">User Database Size (Brivo Projects)</label>
-    <input type="number" id="userDatabase" name="userDatabase" placeholder="Number of users, fobs, codes" data-optional>
+      <label for="databaseUpload">Upload Existing Database</label>
+      <input type="file" id="databaseUpload" name="databaseUpload" accept=".csv,.xlsx,.xls,.pdf">
 
-    <label for="databaseUpload">Upload Existing Database</label>
-    <input type="file" id="databaseUpload" name="databaseUpload" accept=".csv,.xlsx,.xls,.pdf">
+      <label for="vendorAccess">Building Access Instructions</label>
+      <textarea id="vendorAccess" name="vendorAccess" placeholder="Provide details on how vendors access the building (e.g. lockbox location and code)" data-optional></textarea>
 
-    <label for="vendorAccess">Building Access Instructions</label>
-    <textarea id="vendorAccess" name="vendorAccess" placeholder="Provide details on how vendors access the building (e.g. lockbox location and code)" data-optional></textarea>
+      <label for="vendorParking">Vendor Parking Instructions</label>
+      <textarea id="vendorParking" name="vendorParking" placeholder="Provide details on vendor parking availability or restrictions" data-optional></textarea>
 
-    <label for="vendorParking">Vendor Parking Instructions</label>
-    <textarea id="vendorParking" name="vendorParking" placeholder="Provide details on vendor parking availability or restrictions" data-optional></textarea>
-
-    <button type="submit">Submit</button>
+      <button type="submit">Submit</button>
     </form>
   </div>
   <div id="thankYouScreen">
